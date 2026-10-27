@@ -1,0 +1,38 @@
+[
+  {
+    "name": "staff oxygen guidance",
+    "question": "What should I do if an oxygen alarm sounds?",
+    "user": "crew-member",
+    "groups": ["all-staff"],
+    "expected_evidence": ["safe zone", "notify the on-duty engineer"],
+    "forbidden_evidence": ["19.5 kPa", "redundant sensor"],
+    "should_abstain": false
+  },
+  {
+    "name": "engineer oxygen procedure",
+    "question": "What should I do if an oxygen alarm sounds?",
+    "user": "flight-engineer",
+    "groups": ["all-staff", "engineers"],
+    "expected_evidence": ["19.5 kPa", "redundant sensor"],
+    "forbidden_evidence": ["$142,000", "$128,000", "$165,000"],
+    "should_abstain": false
+  },
+  {
+    "name": "finance salary access",
+    "question": "What is the flight engineer salary?",
+    "user": "finance-officer",
+    "groups": ["all-staff", "finance"],
+    "expected_evidence": ["$142,000"],
+    "forbidden_evidence": ["19.5 kPa"],
+    "should_abstain": false
+  },
+  {
+    "name": "staff salary denial",
+    "question": "What is the flight engineer salary?",
+    "user": "crew-member",
+    "groups": ["all-staff"],
+    "expected_evidence": [],
+    "forbidden_evidence": ["$142,000", "$128,000", "$165,000"],
+    "should_abstain": true
+  }
+]
