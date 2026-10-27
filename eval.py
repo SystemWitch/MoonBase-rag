@@ -8,7 +8,7 @@ import time
 from datetime import datetime, timezone
 from typing import Any
 
-from rag_demo import CHAT_MODEL, DATA, EMBEDDING_MODEL, audit, generate_answer, get_client, ingest, retrieve
+from rag import CHAT_MODEL, DATA, EMBEDDING_MODEL, audit, generate_answer, get_client, ingest, retrieve
 
 CASES = DATA / "eval_cases.json"
 REPORT = DATA / "eval-report.json"
