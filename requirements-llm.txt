@@ -1,0 +1,2 @@
+# Required hosted embedding and language-model client
+openai>=1.30,<3
