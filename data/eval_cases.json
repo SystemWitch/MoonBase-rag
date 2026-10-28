@@ -5,6 +5,7 @@
     "user": "crew-member",
     "groups": ["all-staff"],
     "expected_evidence": ["safe zone", "notify the on-duty engineer"],
+    "relevant_evidence": ["oxygen alarm", "safe zone", "on-duty engineer", "airlock use"],
     "forbidden_evidence": ["19.5 kPa", "redundant sensor"],
     "should_abstain": false
   },
@@ -14,6 +15,7 @@
     "user": "flight-engineer",
     "groups": ["all-staff", "engineers"],
     "expected_evidence": ["19.5 kPa", "redundant sensor"],
+    "relevant_evidence": ["oxygen alarm", "19.5 kPa", "redundant sensor", "notify mission control", "pressure fault", "inner hatch"],
     "forbidden_evidence": ["$142,000", "$128,000", "$165,000"],
     "should_abstain": false
   },
@@ -23,6 +25,17 @@
     "user": "finance-officer",
     "groups": ["all-staff", "finance"],
     "expected_evidence": ["$142,000"],
+    "relevant_evidence": ["flight engineer", "$142,000", "annual base salary"],
+    "forbidden_evidence": ["19.5 kPa"],
+    "should_abstain": false
+  },
+  {
+    "name": "finance all salary ranges",
+    "question": "Show all salary ranges for every role",
+    "user": "finance-officer",
+    "groups": ["all-staff", "finance"],
+    "expected_evidence": ["$142,000", "$128,000", "$165,000"],
+    "relevant_evidence": ["flight engineer", "research scientist", "mission commander", "$142,000", "$128,000", "$165,000"],
     "forbidden_evidence": ["19.5 kPa"],
     "should_abstain": false
   },
@@ -32,6 +45,7 @@
     "user": "crew-member",
     "groups": ["all-staff"],
     "expected_evidence": [],
+    "relevant_evidence": [],
     "forbidden_evidence": ["$142,000", "$128,000", "$165,000"],
     "should_abstain": true
   }

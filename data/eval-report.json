@@ -1,0 +1,222 @@
+{
+  "created_at": "2026-10-28T08:38:21.867615+00:00",
+  "embedding_model": "liquid/lfm-2.5-embedding-350m:free",
+  "answer_model": "openrouter/free",
+  "judge_model": "openrouter/free",
+  "case_count": 4,
+  "passed": 2,
+  "failed": 2,
+  "summary": {
+    "retrieval_recall": 1.0,
+    "context_precision": 0.95,
+    "groundedness": 0.5,
+    "relevance": 0.5,
+    "retrieval_ms": 1475.65,
+    "generation_ms": 3866.175,
+    "judge_ms": 5745.075,
+    "total_ms": 11087.05
+  },
+  "cases": [
+    {
+      "name": "staff oxygen guidance",
+      "user": "crew-member",
+      "question": "What should I do if an oxygen alarm sounds?",
+      "answer": "Based on the MoonBase Staff Handbook [source p.1]:\n\n1.  **Move immediately** to the **nearest marked safe zone**.\n2.  **Notify the on-duty engineer** about the alarm.\n3.  **Do not** enter an airlock unless you are specifically **trained and authorized** to do so.\n\nThe handbook reinforces that following these steps is mandatory for everyone on station [source p.1].",
+      "retrieved_ids": [
+        "sample.pdf:1:page_text:1",
+        "sample.pdf:1:page_text:0",
+        "sample.pdf:1:table:0"
+      ],
+      "retrieved_text": [
+        "If an oxygen alarm sounds, move to the nearest marked safe zone and notify the on-duty engineer. Do not enter an airlock unless trained and authorized. Handbook quick reference Situation Everyone should Oxygen alarm Go to safe zone; alert engineer Airlock use Only trained, authorized crew",
+        "MoonBase Staff Handbook MoonBase is a shared lunar research station. Everyone must follow posted safety signs and report hazards to mission control. If an oxygen alarm sounds, move to the nearest marked safe zone and notify the on-duty engineer.",
+        "Table 1: Situation / Everyone should | Oxygen alarm / Go to safe zone; alert engineer | Airlock use / Only trained, authorized crew"
+      ],
+      "expected_evidence_found": [
+        "safe zone",
+        "notify the on-duty engineer"
+      ],
+      "expected_evidence": [
+        "safe zone",
+        "notify the on-duty engineer"
+      ],
+      "relevant_evidence": [
+        "oxygen alarm",
+        "safe zone",
+        "on-duty engineer",
+        "airlock use"
+      ],
+      "relevant_evidence_found": [
+        "oxygen alarm",
+        "safe zone",
+        "on-duty engineer",
+        "airlock use"
+      ],
+      "forbidden_terms_found": [],
+      "retrieval_recall": 1.0,
+      "context_precision": 1.0,
+      "retrieval_ms": 1536.1,
+      "generation_ms": 7601.7,
+      "judge_ms": 4392.3,
+      "total_ms": 13530.3,
+      "groundedness": 0.0,
+      "relevance": 0.0,
+      "judge_reason": "Judge returned invalid JSON; scores set to zero so this case fails visibly.",
+      "checks": {
+        "retrieval_recall": true,
+        "context_precision": true,
+        "acl_no_leakage": true,
+        "abstention": true,
+        "citation": false,
+        "groundedness": false,
+        "answer_relevance": false
+      },
+      "passed": false
+    },
+    {
+      "name": "engineer oxygen procedure",
+      "user": "flight-engineer",
+      "question": "What should I do if an oxygen alarm sounds?",
+      "answer": "Based on the provided context, the response to an oxygen alarm depends on your role and training level:\n\n**For all personnel (including non-trained crew):**\n- Move to the nearest marked safe zone\n- Notify the on-duty engineer\n- Do not enter an airlock unless you are trained and authorized [sample.pdf p.1]\n\n**For trained engineering crew:**\n- Acknowledge the alarm at the habitat console\n- Check the redundant sensor\n- Notify mission control\n- Inspect the life-support loop from the safe side of the inner hatch\n- Do not cycle the airlock during an active pressure fault [sample.pdf p.3]\n\nThe context indicates that trained engineering crew have a specific runbook procedure for oxygen alarms when partial pressure drops below 19.5 kPa, while general personnel should follow the basic safety protocol of going to a safe zone and alerting the engineer. [sample.pdf p.1][sample.pdf p.3]",
+      "retrieved_ids": [
+        "sample.pdf:1:page_text:1",
+        "sample.pdf:1:page_text:0",
+        "sample.pdf:3:page_text:0",
+        "sample.pdf:1:table:0",
+        "sample.pdf:3:table:0"
+      ],
+      "retrieved_text": [
+        "If an oxygen alarm sounds, move to the nearest marked safe zone and notify the on-duty engineer. Do not enter an airlock unless trained and authorized. Handbook quick reference Situation Everyone should Oxygen alarm Go to safe zone; alert engineer Airlock use Only trained, authorized crew",
+        "MoonBase Staff Handbook MoonBase is a shared lunar research station. Everyone must follow posted safety signs and report hazards to mission control. If an oxygen alarm sounds, move to the nearest marked safe zone and notify the on-duty engineer.",
+        "Oxygen Alarm Runbook For trained engineering crew. At an oxygen partial pressure below 19.5 kPa, acknowledge the alarm at the habitat console, check the redundant sensor, notify mission control, and inspect the life-support loop from the safe side of the inner hatch. Do not cycle the airlock during an active pressure fault.",
+        "Table 1: Situation / Everyone should | Oxygen alarm / Go to safe zone; alert engineer | Airlock use / Only trained, authorized crew",
+        "Table: Oxygen | Alarm Runbook ; For trained engineering | crew."
+      ],
+      "expected_evidence_found": [
+        "19.5 kpa",
+        "redundant sensor"
+      ],
+      "expected_evidence": [
+        "19.5 kpa",
+        "redundant sensor"
+      ],
+      "relevant_evidence": [
+        "oxygen alarm",
+        "19.5 kpa",
+        "redundant sensor",
+        "notify mission control",
+        "pressure fault",
+        "inner hatch"
+      ],
+      "relevant_evidence_found": [
+        "oxygen alarm",
+        "19.5 kpa",
+        "redundant sensor",
+        "notify mission control",
+        "pressure fault",
+        "inner hatch"
+      ],
+      "forbidden_terms_found": [],
+      "retrieval_recall": 1.0,
+      "context_precision": 0.8,
+      "retrieval_ms": 1996.4,
+      "generation_ms": 2160.8,
+      "judge_ms": 10297.2,
+      "total_ms": 14454.6,
+      "groundedness": 1.0,
+      "relevance": 1.0,
+      "judge_reason": "The answer accurately summarizes both general crew and trained engineering responses to an oxygen alarm based on explicit instructions in the provided context, with clear citations to the source pages. All actions mentioned are directly supported by the evidence.",
+      "checks": {
+        "retrieval_recall": true,
+        "context_precision": true,
+        "acl_no_leakage": true,
+        "abstention": true,
+        "citation": true,
+        "groundedness": true,
+        "answer_relevance": true
+      },
+      "passed": true
+    },
+    {
+      "name": "finance salary access",
+      "user": "finance-officer",
+      "question": "What is the flight engineer salary?",
+      "answer": "User Safety: safe",
+      "retrieved_ids": [
+        "sample.pdf:2:page_text:0",
+        "sample.pdf:2:table:0"
+      ],
+      "retrieved_text": [
+        "MoonBase Compensation Schedule - CONFIDENTIAL Annual base salaries are confidential finance records. Do not share outside the Finance group. Role Annual salary (USD) Flight engineer $142,000 Research scientist $128,000 Mission commander $165,000",
+        "Table 1: Role / Annual salary (USD) | Flight engineer / $142,000 | Research scientist / $128,000 |"
+      ],
+      "expected_evidence_found": [
+        "$142,000"
+      ],
+      "expected_evidence": [
+        "$142,000"
+      ],
+      "relevant_evidence": [
+        "flight engineer",
+        "$142,000",
+        "annual base salary"
+      ],
+      "relevant_evidence_found": [
+        "flight engineer",
+        "$142,000"
+      ],
+      "forbidden_terms_found": [],
+      "retrieval_recall": 1.0,
+      "context_precision": 1.0,
+      "retrieval_ms": 1247.2,
+      "generation_ms": 5702.2,
+      "judge_ms": 8290.8,
+      "total_ms": 15240.3,
+      "groundedness": 0.0,
+      "relevance": 0.0,
+      "judge_reason": "Judge returned invalid JSON; scores set to zero so this case fails visibly.",
+      "checks": {
+        "retrieval_recall": true,
+        "context_precision": true,
+        "acl_no_leakage": true,
+        "abstention": true,
+        "citation": false,
+        "groundedness": false,
+        "answer_relevance": false
+      },
+      "passed": false
+    },
+    {
+      "name": "staff salary denial",
+      "user": "crew-member",
+      "question": "What is the flight engineer salary?",
+      "answer": "I could not find information you are permitted to access that answers this question.",
+      "retrieved_ids": [],
+      "retrieved_text": [],
+      "expected_evidence_found": [],
+      "expected_evidence": [],
+      "relevant_evidence": [],
+      "relevant_evidence_found": [],
+      "forbidden_terms_found": [],
+      "retrieval_recall": 1.0,
+      "context_precision": 1.0,
+      "retrieval_ms": 1122.9,
+      "generation_ms": 0.0,
+      "judge_ms": 0.0,
+      "total_ms": 1123.0,
+      "groundedness": 1.0,
+      "relevance": 1.0,
+      "judge_reason": "No retrieved evidence; answer abstained.",
+      "checks": {
+        "retrieval_recall": true,
+        "context_precision": true,
+        "acl_no_leakage": true,
+        "abstention": true,
+        "citation": true,
+        "groundedness": true,
+        "answer_relevance": true
+      },
+      "passed": true
+    }
+  ]
+}
