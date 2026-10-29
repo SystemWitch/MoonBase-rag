@@ -15,7 +15,7 @@ def load_streamlit_secrets() -> None:
     """Copy Streamlit-managed secrets into environment variables used by rag.py."""
     try:
         secrets = st.secrets
-        for key in ("MODEL_PROVIDER", "OPENROUTER_API_KEY", "OPENAI_API_KEY", "EMBEDDING_MODEL", "CHAT_MODEL", "EVAL_MODEL"):
+        for key in ("OPENROUTER_API_KEY", "EMBEDDING_MODEL", "CHAT_MODEL", "EVAL_MODEL"):
             if key in secrets:
                 os.environ[key] = str(secrets[key])
     except (FileNotFoundError, StreamlitSecretNotFoundError):
@@ -31,9 +31,8 @@ import eval as eval_runner
 st.markdown(
     """
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
     :root { --navy:#101b2b; --panel:#17263a; --muted:#91a3b7; --ice:#e8f0f7; --cyan:#65d4dd; --amber:#f0b45e; --red:#f07878; }
-    html, body, [class*="css"] { font-family: 'Manrope', sans-serif; }
+    html, body, [class*="css"] { font-family: Arial, sans-serif; }
     .stApp { background: radial-gradient(ellipse at 78% 0%, #1a3141 0, #111c2c 38%, #0d1724 100%); color: var(--ice); }
     [data-testid="stHeader"] { background: transparent; }
     [data-testid="stSidebar"] { background: #111d2d; border-right: 1px solid #26384c; }
@@ -41,13 +40,13 @@ st.markdown(
     h1, h2, h3 { letter-spacing: -0.035em; color: #f3f7fb; }
     p, li, label { color: #c2cfdb; }
     .hero { padding: 1.35rem 1.6rem; border: 1px solid #2b4055; border-radius: 18px; background: linear-gradient(120deg,rgba(28,49,68,.96),rgba(20,35,53,.72)); margin: .25rem 0 1.25rem; }
-    .eyebrow { color: var(--cyan); font: 500 .73rem 'DM Mono',monospace; letter-spacing: .16em; text-transform: uppercase; }
+    .eyebrow { color: var(--cyan); font: 500 .73rem Consolas,monospace; letter-spacing: .16em; text-transform: uppercase; }
     .hero h1 { margin: .35rem 0 .4rem; font-size: 2.2rem; }
     .hero p { margin: 0; color: #aebed0; max-width: 850px; }
     .pill { display:inline-block; padding:.24rem .58rem; border-radius:999px; font:500 .7rem 'DM Mono',monospace; color:#9be7e8; background:#153740; border:1px solid #2d6770; margin: .15rem .2rem .15rem 0; }
     .notice { border:1px solid #8c6838; border-left:4px solid var(--amber); background:#302a22; padding:.8rem 1rem; border-radius:10px; color:#f3d6a8; margin:.5rem 0 1rem; }
     .subtle { color:#91a3b7; font-size:.87rem; }
-    .mono { font-family:'DM Mono',monospace; }
+    .mono { font-family:Consolas,monospace; }
     [data-testid="stMetric"] { background:rgba(23,38,58,.82); border:1px solid #2b4055; border-radius:13px; padding:.8rem 1rem; }
     [data-testid="stMetricLabel"] { color:#9db0c3; }
     [data-testid="stMetricValue"] { color:#f4f8fb; }
@@ -107,7 +106,7 @@ with st.sidebar:
     st.divider()
     selected_role = st.selectbox("Viewing as", list(PERSONAS))
     st.markdown("<div class='notice'><b>Demo access mode</b><br>Role selection is not authentication. This app uses synthetic documents only.</div>", unsafe_allow_html=True)
-    has_key = bool(os.getenv("OPENROUTER_API_KEY")) if rag.MODEL_PROVIDER == "openrouter" else bool(os.getenv("OPENAI_API_KEY"))
+    has_key = bool(os.getenv("OPENROUTER_API_KEY"))
     st.markdown(f"**Model provider** · `{rag.MODEL_PROVIDER}`")
     st.markdown(f"**Embedding model** · `{rag.EMBEDDING_MODEL}`")
     st.markdown(f"**Answer model** · `{rag.CHAT_MODEL}`")

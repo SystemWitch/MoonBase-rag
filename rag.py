@@ -18,14 +18,11 @@ ROOT = Path(__file__).parent
 DATA = ROOT / "data"
 INDEX = DATA / "index.json"
 AUDIT = DATA / "audit.jsonl"
-MODEL_PROVIDER = os.getenv("MODEL_PROVIDER", "openrouter").lower()
-if MODEL_PROVIDER == "openrouter":
-    # Fixed models make outputs more predictable than OpenRouter's randomly routed free-model pool.
-    DEFAULT_EMBEDDING_MODEL, DEFAULT_CHAT_MODEL = "liquid/lfm-2.5-embedding-350m:free", "google/gemma-4-31b-it:free"
-else:
-    DEFAULT_EMBEDDING_MODEL, DEFAULT_CHAT_MODEL = "text-embedding-3-small", "gpt-4o-mini"
-EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", os.getenv("OPENAI_EMBEDDING_MODEL", DEFAULT_EMBEDDING_MODEL))
-CHAT_MODEL = os.getenv("CHAT_MODEL", os.getenv("OPENAI_MODEL", DEFAULT_CHAT_MODEL))
+# All model calls go through OpenRouter; fixed model IDs avoid a random free-model route.
+MODEL_PROVIDER = "openrouter"
+DEFAULT_EMBEDDING_MODEL, DEFAULT_CHAT_MODEL = "liquid/lfm-2.5-embedding-350m:free", "nvidia/nemotron-3-super-120b-a12b:free"
+EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", DEFAULT_EMBEDDING_MODEL)
+CHAT_MODEL = os.getenv("CHAT_MODEL", DEFAULT_CHAT_MODEL)
 MIN_KEYWORD_COVERAGE = 0.5
 MIN_VECTOR_SIMILARITY = 0.50
 
@@ -45,26 +42,19 @@ def _configured_api_key(name: str) -> str | None:
 
 
 def get_client():
-    """Return the OpenAI-compatible client for OpenRouter (default) or OpenAI."""
+    """Return the OpenAI-compatible client configured to send requests to OpenRouter."""
     from openai import OpenAI
-    if MODEL_PROVIDER == "openrouter":
-        api_key = _configured_api_key("OPENROUTER_API_KEY")
-        if not api_key:
-            raise RuntimeError(
-                "OPENROUTER_API_KEY is missing or blank. Set it in your shell, or add a real key "
-                "to .streamlit/secrets.toml (see .streamlit/secrets.toml.example)."
-            )
-        return OpenAI(
-            api_key=api_key,
-            base_url="https://openrouter.ai/api/v1",
-            default_headers={"HTTP-Referer": "https://moonbase-rag.local", "X-Title": "MoonBase RAG"},
+    api_key = _configured_api_key("OPENROUTER_API_KEY")
+    if not api_key:
+        raise RuntimeError(
+            "OPENROUTER_API_KEY is missing or blank. Set it in your shell, or add a real key "
+            "to .streamlit/secrets.toml (see .streamlit/secrets.toml.example)."
         )
-    if MODEL_PROVIDER == "openai":
-        api_key = _configured_api_key("OPENAI_API_KEY")
-        if not api_key:
-            raise RuntimeError("Set OPENAI_API_KEY to use MODEL_PROVIDER=openai.")
-        return OpenAI(api_key=api_key)
-    raise RuntimeError("MODEL_PROVIDER must be 'openrouter' or 'openai'.")
+    return OpenAI(
+        api_key=api_key,
+        base_url="https://openrouter.ai/api/v1",
+        default_headers={"HTTP-Referer": "https://moonbase-rag.local", "X-Title": "MoonBase RAG"},
+    )
 
 
 def embed_texts(texts: list[str]) -> list[list[float]]:

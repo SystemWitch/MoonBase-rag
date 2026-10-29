@@ -12,7 +12,7 @@ from rag import CHAT_MODEL, DATA, EMBEDDING_MODEL, audit, generate_answer, get_c
 
 CASES = DATA / "eval_cases.json"
 REPORT = DATA / "eval-report.json"
-EVAL_MODEL = os.getenv("EVAL_MODEL", os.getenv("OPENAI_EVAL_MODEL", "nvidia/nemotron-3-super-120b-a12b:free"))
+EVAL_MODEL = os.getenv("EVAL_MODEL", "nvidia/nemotron-3-super-120b-a12b:free")
 MIN_RECALL = 1.0
 MIN_CONTEXT_PRECISION = 0.5
 MIN_GROUNDEDNESS = 0.8
