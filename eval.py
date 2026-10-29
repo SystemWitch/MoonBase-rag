@@ -12,7 +12,7 @@ from rag import CHAT_MODEL, DATA, EMBEDDING_MODEL, audit, generate_answer, get_c
 
 CASES = DATA / "eval_cases.json"
 REPORT = DATA / "eval-report.json"
-EVAL_MODEL = os.getenv("EVAL_MODEL", "nvidia/nemotron-3-super-120b-a12b:free")
+EVAL_MODEL = os.getenv("EVAL_MODEL", "nvidia/nemotron-3.5-lightning:free")
 MIN_RECALL = 1.0
 MIN_CONTEXT_PRECISION = 0.5
 MIN_GROUNDEDNESS = 0.8
@@ -23,20 +23,6 @@ def judge_answer(question: str, context: str, answer: str) -> dict[str, Any]:
     """Ask a hosted judge model to score answer grounding and relevance from 0 to 1."""
     response = get_client().chat.completions.create(
         model=EVAL_MODEL,
-        response_format={"type": "json_schema", "json_schema": {
-            "name": "rag_answer_evaluation",
-            "strict": True,
-            "schema": {
-                "type": "object",
-                "properties": {
-                    "groundedness": {"type": "number"},
-                    "relevance": {"type": "number"},
-                    "reason": {"type": "string"},
-                },
-                "required": ["groundedness", "relevance", "reason"],
-                "additionalProperties": False,
-            },
-        }},
         messages=[
             {"role": "system", "content": (
                 "You are a strict RAG answer evaluator. Score only whether the answer is supported by the supplied context "

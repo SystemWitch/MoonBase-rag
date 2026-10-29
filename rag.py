@@ -20,7 +20,7 @@ INDEX = DATA / "index.json"
 AUDIT = DATA / "audit.jsonl"
 # All model calls go through OpenRouter; fixed model IDs avoid a random free-model route.
 MODEL_PROVIDER = "openrouter"
-DEFAULT_EMBEDDING_MODEL, DEFAULT_CHAT_MODEL = "liquid/lfm-2.5-embedding-350m:free", "nvidia/nemotron-3-super-120b-a12b:free"
+DEFAULT_EMBEDDING_MODEL, DEFAULT_CHAT_MODEL = "liquid/lfm-2.5-embedding-350m:free", "nvidia/nemotron-3.5-lightning:free"
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", DEFAULT_EMBEDDING_MODEL)
 CHAT_MODEL = os.getenv("CHAT_MODEL", DEFAULT_CHAT_MODEL)
 MIN_KEYWORD_COVERAGE = 0.5
